@@ -11,7 +11,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  var lang = ['Hindi', 'English', 'Marathi'];
+  var lang = ['Hindi', 'English', 'Arabic', 'Tamil', 'Malayalam', 'Kannada', 'Telugu',];
   var originLanguage = 'From';
   var destinationLanguage = 'To';
   var outPut = '';
@@ -28,7 +28,28 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         outPut = 'Failed to translate';
       });
+    }else if(dest == '--'){
+      outPut = 'Failed to translate';
     }
+  }
+
+  String getLanguageCode(String language){
+    if (language == 'English') {
+      return 'en';
+    }else if(language == 'Hindi'){
+      return 'hi';
+    }else if(language == 'Arabic'){
+      return 'ar';
+    }else if(language == 'Tamil'){
+      return 'ta';
+    }else if(language == 'Malayalam'){
+      return 'ma';
+    }else if(language == 'Kannada'){
+      return 'ka';
+    }else if(language == 'Telugu'){
+      return 'te';
+    }
+    return '--';
   }
 
   @override
@@ -235,11 +256,39 @@ class _MyHomePageState extends State<MyHomePage> {
               Padding(
                 padding: EdgeInsets.all(8),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Translate(getLanguageCode(originLanguage), getLanguageCode(destinationLanguage), langController.text.toString());
+                  },
                   child: Text('Translate',),
                   style: ElevatedButton.styleFrom(primary: Color(0xff2b3c5a)),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 60,
+              ),
+              Container(
+                height: 180,
+                width: 300,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white, 
+                    style: BorderStyle.solid,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.transparent
+                ),
+                child: Center(
+                  child: Text(
+                    '\n$outPut',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
